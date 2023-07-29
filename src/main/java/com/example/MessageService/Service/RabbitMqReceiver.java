@@ -30,24 +30,21 @@ public class RabbitMqReceiver implements RabbitListenerConfigurer {
 
         logger.info("Product Details Received is.. " + product);
 
-        ProductEntity entity=new ProductEntity();
-        BeanUtils.copyProperties(product,entity);
+        ProductEntity entity = new ProductEntity();
+        BeanUtils.copyProperties(product, entity);
 
-        ProductEntity productsaved=new ProductEntity();
-        ProductEntity productsaved1=new ProductEntity();
+        ProductEntity productsaved = new ProductEntity();
+        ProductEntity productsaved1 = new ProductEntity();
 
-    //    productsaved=productRepo.findByProductName(entity.getProductName());
-
-        productsaved1=productRepo.findByProductNameAndPrice(entity.getProductName(), entity.getPrice());
+        productsaved1 = productRepo.findByProductNameAndPrice(entity.getProductName(), entity.getPrice());
 
 
-
-        if(productsaved1==null){
+        if (productsaved1 == null) {
             ProductEntity productEntity = productRepo.save(entity);
             logger.info("Product saved into consumer db");
-        }else {
+        } else {
             logger.info("Recieved Product Details from existing db " + productsaved1.toString());
-            productsaved1.setQuantity(product.getQuantity()+productsaved1.getQuantity());
+            productsaved1.setQuantity(product.getQuantity() + productsaved1.getQuantity());
             productRepo.save(productsaved1);
             logger.info("Updated DB");
 

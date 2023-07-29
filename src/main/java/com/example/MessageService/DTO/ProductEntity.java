@@ -14,7 +14,6 @@ import javax.persistence.*;
 public class ProductEntity {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long productId;
